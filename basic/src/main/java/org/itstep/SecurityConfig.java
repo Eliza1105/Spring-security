@@ -34,7 +34,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeRequests()
-                .anyRequest()//.hasAnyAuthority("write")
+                .antMatchers("/root/**").hasAuthority("write")
+                .antMatchers("/user/**").hasAnyAuthority("write", "user")
+                .anyRequest()//.hasAuthority("write")
                 .authenticated()
                 .and()
                 .httpBasic()
